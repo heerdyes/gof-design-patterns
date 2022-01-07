@@ -1,0 +1,20 @@
+# setup stuff
+wh 600 400
+bg 255 255 255
+fg 0 0 0
+fnt fnt/ocra.ttf
+mk tex/singleton
+
+# drawing
+box 60 100 200 180
+txt 70 110 Singleton
+ln 60 140 200 0
+txt 70 150 static Instance()
+txt 70 170 SingletonOperation()
+txt 70 190 GetSingletonData()
+ln 60 220 200 0
+txt 70 230 static uniqueInstance
+txt 70 250 singletonData
+note 340 140 190 40
+txt 350 150 return uniqueInstance
+dln 195 162 145 0 32
