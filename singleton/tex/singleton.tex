@@ -1,0 +1,96 @@
+\documentclass{beamer}
+
+\usepackage{minted}
+
+\title{Design Patterns}
+\subtitle{Singleton}
+\author{Heerdyes Mahapatro}
+
+\usetheme{Berkeley}
+\usecolortheme{dove}
+\begin{document}
+	\frame {
+		\titlepage
+	}
+	\frame {
+		\frametitle{Singleton}
+		Intent - Ensure a class only has one instance, and allows global access to it.
+		Motivation - you need only one of something
+		\begin{itemize}
+		    \item OS has only one file system and window manager (at a given time)
+		    \item Digital filter has only one A/D converter
+		    \item Only one printer spooler
+		\end{itemize}
+		Use when:
+		\begin{itemize}
+		    \item only one instance is required
+		    \item instance must allow subclassing
+		\end{itemize}
+		PS - In python a tuple of length one is referred to as a singleton (from math definition)
+	}
+	\frame{
+	    \frametitle{Singleton - contd}
+	    \begin{itemize}
+	        \item Structure \cite{EGamma98}
+    	    \item \includegraphics[width=0.6\paperwidth]{singleton.jpg}
+    	\end{itemize}
+	}
+	\begin{frame}[fragile]
+	    \frametitle{Singleton - code}
+	    Non-pythonic style
+	    \rule{\textwidth}{1pt}
+	    \scriptsize
+	    \begin{minted}[fontsize=\tiny]{python}
+class Turtlebot:
+    _instance = None
+    
+    def __init__(self):
+        raise RuntimeError('simulating a private constructor by blowing __init__ up!')
+        
+    @classmethod
+    def instance(cls,x,y,a):
+        if cls._instance is None:
+            print('creating first instance...')
+            cls._instance=cls.__new__(cls)
+            cls._instance.x=x
+            cls._instance.y=y
+            cls._instance.a=a
+        return cls._instance
+	    \end{minted}
+	    \rule{\textwidth}{1pt}
+	\end{frame}
+	\begin{frame}[fragile]
+	    \frametitle{Singleton - more code}
+	    A bit more pythonic \cite{pypatterns}
+	    \rule{\textwidth}{1pt}
+	    \scriptsize
+	    \begin{minted}[fontsize=\tiny]{python}
+class Turtlebot:
+    _instance = None
+    
+    def __new__(cls,x,y,a):
+        if cls._instance is None:
+            print('creating first instance...')
+            cls._instance=super(Turtlebot,cls).__new__(cls)
+            cls._instance.x=x
+            cls._instance.y=y
+            cls._instance.a=a
+        return cls._instance
+	    \end{minted}
+	    \rule{\textwidth}{1pt}
+	\end{frame}
+	\frame{
+	    \frametitle{Singleton - Remarks}
+	    \begin{itemize}
+	        \item python impl of GoF style Singleton is almost never done
+	        \item due to syntactic support for $\_\_new\_\_()$ while allowing normal object construction
+	        \item if inevitable, pythonistas would rather implement \cite{pyglobobj} instead
+	    \end{itemize}
+	}
+	\frame{
+	    \frametitle{References}
+	    \bibliographystyle{amsalpha}
+	    \bibliography{sources.bib}
+	}
+
+\end{document}
