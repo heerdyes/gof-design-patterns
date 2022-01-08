@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+echo "generating diagram"
+imsynth.py prototype.art
+
+pushd tex
+latexmk -shell-escape -xelatex prototype.tex
+popd
+
+echo "done!"

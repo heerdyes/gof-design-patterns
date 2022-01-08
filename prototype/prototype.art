@@ -1,0 +1,55 @@
+# setup stuff
+wh 600 400
+bg 255 255 255
+fg 0 0 0
+fnt ../_rsrc/fonts/ocra.ttf
+mk tex/prototype
+
+# client class
+box 60 100 110 70
+txt 70 110 Client
+ln 60 130 110 0
+txt 70 140 Operation()
+
+note 40 200 200 40
+txt 60 210 p = prototype->Clone()
+
+dln 100 160 42 -90 12
+
+# prototype class
+box 350 50 110 70
+txt 360 60 Prototype
+ln 350 80 110 0
+txt 360 90 Clone()
+
+# concrete prototype1
+box 260 200 130 70
+txt 263 210 ConcretePrototype1
+ln 260 230 130 0
+txt 270 240 Clone()
+
+# concrete prototype2
+box 420 200 130 70
+txt 423 210 ConcretePrototype2
+ln 420 230 130 0
+txt 430 240 Clone()
+
+# notes
+note 260 300 130 40
+txt 270 310 return self copy
+
+note 420 300 130 40
+txt 430 310 return self copy
+
+# connectors
+dln 290 250 50 -90 12
+dln 450 250 50 -90 12
+ln 400 120 40 -90
+ln 350 160 100 0
+ln 350 160 40 -90
+ln 450 160 40 -90
+
+ln 170 110 100 0
+ln 270 110 45 90
+arrow 270 65 80 0
+txt 180 90 prototype
