@@ -2,7 +2,7 @@
 wh 600 400
 bg 255 255 255
 fg 0 0 0
-fnt fnt/ocra.ttf
+fnt ../_rsrc/fonts/ocra.ttf
 mk tex/singleton
 
 # drawing
