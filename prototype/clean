@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+pushd tex
+latexmk -c
+echo "removing files left behind by latexmk -c"
+rm *.xdv *.vrb *snm *.nav *.bbl *.pdf
+rm prototype.jpg
+popd
+

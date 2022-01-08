@@ -1,0 +1,162 @@
+\documentclass{beamer}
+
+\usepackage{minted}
+
+\title{Design Patterns}
+\subtitle{Prototype}
+\author{Heerdyes Mahapatro}
+
+\usetheme{Berkeley}
+\usecolortheme{dove}
+\begin{document}
+	\frame {
+		\titlepage
+	}
+	\frame {
+		\frametitle{Prototype}
+		Intent - Need to decide the class of an object dynamically from a menu of classes.
+		Motivation - create an object from a dynamic list of classes.
+		\begin{itemize}
+		    \item useful for static languages like C++
+		    \item Smalltalk, Objective C and Python already have the concept of prototype (class object)
+		    \item In Self and JavaScript all instantiation happens through prototyping
+		\end{itemize}
+	}
+	\frame{
+	    \frametitle{Prototype - contd}
+	    \begin{itemize}
+	        \item Structure \cite{EGamma98}
+    	    \item \includegraphics[width=0.6\paperwidth]{prototype.jpg}
+    	\end{itemize}
+	}
+	\begin{frame}[fragile]
+	    \frametitle{Prototype - multiple classes}
+	    \rule{\textwidth}{1pt}
+	    \scriptsize
+	    \begin{minted}[fontsize=\tiny]{python}
+class SoftSynth:
+    def __init__(self,polyphony,channels,latency):
+        self.polyphony=polyphony
+        self.channels=channels
+        self.latency=latency
+        
+    def __str__(self):
+        return 'SoftSynth[poly=%d,ch=%d,lat=%d]'%(self.polyphony,self.channels,self.latency)
+
+class AnalogSynth:
+    def __init__(self,polyphony):
+        self.polyphony=polyphony
+    
+    def __str__(self):
+        return 'AnalogSynth[poly=%d]'%self.polyphony
+
+class SynthWorkstation:
+    def __init__(self,polyphony,channels):
+        self.polyphony=polyphony
+        self.channels=channels
+        
+    def __str__(self):
+        return 'SynthWorkstation[poly=%d,ch=%d]'%(self.polyphony,self.channels)
+	    \end{minted}
+	    \rule{\textwidth}{1pt}
+	\end{frame}
+	\begin{frame}[fragile]
+	    \frametitle{Prototype - multiple classes contd}
+	    \rule{\textwidth}{1pt}
+	    \scriptsize
+	    \begin{minted}[fontsize=\tiny]{python}
+instmenu={
+    'sw': (SynthWorkstation, 128, 16),
+    'as': (AnalogSynth, 4),
+    'ss': (SoftSynth, 256, 256, 50)
+}
+
+print('enter inst code [sw,as,ss]: ')
+inst=input()
+syn=instmenu[inst]
+# reminiscent of lisp's car and cdr
+i0=syn[0](*syn[1:])
+print(i0)
+	    \end{minted}
+	    \rule{\textwidth}{1pt}
+	\end{frame}
+	\begin{frame}[fragile]
+	    \frametitle{Prototype - CLI shell}
+	    \rule{\textwidth}{1pt}
+	    \scriptsize
+	    \begin{minted}[fontsize=\tiny]{python}
+import copy
+
+class BigBangPrototype:
+    def __init__(self,attrs):
+        self.attrs=attrs
+    
+    def clone(self):
+        return BigBangPrototype(copy.deepcopy(self.attrs))
+        
+    def __str__(self):
+        return 'attrs: '+str(self.attrs)
+
+
+# original prototype that is the source of all objects
+selobj='O'
+symtab={
+    'O':BigBangPrototype({})
+}
+while True:
+    print('1. show objects')
+    print('2. create object')
+    print('3. customize object')
+    print('q. quit')
+    ch=input()
+	    \end{minted}
+	    \rule{\textwidth}{1pt}
+	\end{frame}
+	\begin{frame}[fragile]
+	    \frametitle{Prototype - CLI shell contd}
+	    \rule{\textwidth}{1pt}
+	    \scriptsize
+	    \begin{minted}[fontsize=\tiny]{python}
+    if ch=='1':
+        print('-----')
+        for k in symtab.keys():
+            print(k,symtab[k])
+        print('-----')
+    elif ch=='2':
+        print('[mkobj] select prototyping source: ',end='')
+        src=input().strip()
+        print('[mkobj] object name: ',end='')
+        onm=input().strip()
+        symtab[onm]=symtab[src].clone()
+    elif ch=='3':
+        print('[custom] object name: ',end='')
+        selobj=input().strip()
+        custobj=symtab[selobj]
+        while True:
+            print('[customizer] > ',end='')
+            inarr=input().strip().split(' ')
+            if inarr[0]=='_q':
+                break
+            custobj.attrs[inarr[0]]=inarr[1]
+        symtab[selobj]=custobj
+    elif ch=='q':
+        break
+    else:
+        print('unknown option: '+ch)
+	    \end{minted}
+	    \rule{\textwidth}{1pt}
+	\end{frame}
+	\frame{
+	    \frametitle{Prototype - Remarks}
+	    \begin{itemize}
+	        \item Unnecessary in many cases for languages like python, smalltalk and ruby \cite{pyproto}
+	        \item First-class functions and classes in python make the semantics very convenient
+	    \end{itemize}
+	}
+	\frame{
+	    \frametitle{References}
+	    \bibliographystyle{amsalpha}
+	    \bibliography{sources.bib}
+	}
+
+\end{document}
