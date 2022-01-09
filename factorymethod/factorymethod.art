@@ -1,0 +1,60 @@
+; setup stuff
+wh 600 400
+bg 255 255 255
+fg 0 0 0
+fnt ../_rsrc/fonts/ocra.ttf
+mk tex/factorymethod
+
+mov a #50
+mov b #100
+boxr a b 0 0 70 40
+txtr a b 10 10 Product
+
+mov c #30
+mov d #250
+boxr c d 0 0 120 40
+txtr c d 10 10 ConcreteProduct
+
+mov e #210
+mov f #50
+boxr e f 0 0 120 100
+txtr e f 10 10 Creator
+lnr e f 0 30 120 0
+txtr e f 10 40 FactoryMethod()
+txtr e f 10 60 AnOperation()
+
+mov g #210
+mov h #240
+boxr g h 0 0 120 70
+txtr g h 10 10 ConcreteCreator
+lnr g h 0 30 120 0
+txtr g h 10 40 FactoryMethod()
+
+mov m #380
+mov n #100
+noter m n 0 0 180 40
+txtr m n 5 10 product = FactoryMethod()
+
+mov p #380
+mov q #270
+noter p q 0 0 190 40
+txtr p q 5 10 return new ConcreteProduct
+
+; connectors
+lnr a b 35 40 40 -90
+lnr a b 35 80 10 226
+lnr a b 35 80 10 -45
+lnr a b 27 88 16 0
+lnr a b 35 88 62 -90
+
+lnr e f 60 100 30 -90
+lnr e f 60 130 10 226
+lnr e f 60 130 10 -45
+lnr e f 52 138 16 0
+lnr e f 60 138 52 -90
+
+darrowr g h 0 20 60 180 20
+golr e f 100 65 6
+dlnr e f 107 68 63 0 15
+golr g h 112 45 6
+dlnr g h 119 48 50 0 13
