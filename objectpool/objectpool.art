@@ -1,0 +1,34 @@
+; setup stuff
+wh 600 400
+bg 255 255 255
+fg 0 0 0
+fnt ../_rsrc/fonts/ocra.ttf
+mk tex/objectpool
+
+mov a #80
+mov b #100
+boxr a b 0 0 70 40
+txtr a b 10 10 Client
+txtr a b 80 0 asks for reusable
+txtr a b 0 60 uses
+
+mov c #80
+mov d #250
+boxr c d 0 0 70 40
+txtr c d 8 10 Reusable
+
+mov e #350
+mov f #150
+boxr e f 0 0 120 100
+txtr e f 10 10 ReusablePool
+lnr e f 0 30 120 0
+txtr e f 10 40 getInstance()
+txtr e f 10 60 acquire()
+txtr e f 10 80 release()
+
+; connectors
+lnr a b 70 20 260 0
+arrowr e f 60 -30 30 -90
+arrowr a b 35 40 110 -90
+lnr c d 70 20 260 0
+lnr e f 60 100 20 -90

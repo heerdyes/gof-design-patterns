@@ -1,0 +1,77 @@
+\documentclass{beamer}
+
+\usepackage{minted}
+
+\title{Design Patterns}
+\subtitle{Object Pool}
+\author{Heerdyes Mahapatro}
+
+\usetheme{Berkeley}
+\usecolortheme{dove}
+\begin{document}
+	\frame {
+		\titlepage
+	}
+	\frame {
+		\frametitle{Object Pool}
+		\begin{itemize}
+    		\item Intent - To reuse objects that have a high cost of creation (perf boost)
+		    \item Application - Database connections are famous for using the pooling pattern as they are costly
+		    \item Resources are used more economically
+		\end{itemize}
+	}
+	\frame{
+	    \frametitle{Object Pool - contd}
+	    \begin{itemize}
+	        \item Structure \cite{objpool}
+    	    \item \includegraphics[width=0.6\paperwidth]{objectpool.jpg}
+    	\end{itemize}
+	}
+	\begin{frame}[fragile]
+	    \frametitle{Object Pool}
+	    \rule{\textwidth}{1pt}
+	    \scriptsize
+	    \begin{minted}[fontsize=\tiny]{python}
+class RsrcPool:
+    def __init__(self, sz):
+        self._pool=[Rsrc(i) for i in range(sz)]
+
+    def acquire(self):
+        if len(self._pool)<=0:
+            raise Exception('no more objects in pool!')
+        return self._pool.pop()
+
+    def release(self, r):
+        print('releasing %s'%str(r))
+        self._pool.append(r)
+
+class Rsrc:
+    def __init__(self,_id):
+        self.pid=_id
+        
+    def __str__(self):
+        return 'R[%d]'%self.pid
+
+opool=RsrcPool(10)
+r1=opool.acquire()
+print(r1)
+r2=opool.acquire()
+print(r2)
+opool.release(r1)
+opool.release(r2)
+	    \end{minted}
+	\end{frame}
+	\frame{
+	    \frametitle{Object Pool - Remarks}
+	    \begin{itemize}
+	        \item Not in the original GoF book (1998)
+	        \item Widely used in database and network client/server libraries \cite{objpool}
+	    \end{itemize}
+	}
+	\frame{
+	    \frametitle{References}
+	    \bibliographystyle{amsalpha}
+	    \bibliography{sources.bib}
+	}
+
+\end{document}
