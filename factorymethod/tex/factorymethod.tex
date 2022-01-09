@@ -1,0 +1,94 @@
+\documentclass{beamer}
+
+\usepackage{minted}
+
+\title{Design Patterns}
+\subtitle{Factory Method}
+\author{Heerdyes Mahapatro}
+
+\usetheme{Berkeley}
+\usecolortheme{dove}
+\begin{document}
+	\frame {
+		\titlepage
+	}
+	\frame {
+		\frametitle{Factory Method}
+		\begin{itemize}
+    		\item Intent - Let subclasses decide which class to instantiate
+		    \item Problem/Motivation - Framework must instantiate classes but it only knows about abstract classes, which it cannot instantiate
+		    \item (Also known as virtual constructor)
+		\end{itemize}
+	}
+	\frame{
+	    \frametitle{Factory Method - contd}
+	    \begin{itemize}
+	        \item Structure \cite{EGamma98}
+    	    \item \includegraphics[width=0.6\paperwidth]{factorymethod.jpg}
+    	\end{itemize}
+	}
+	\begin{frame}[fragile]
+	    \frametitle{Factory Method - GoF style}
+	    Visible in code that is ported from an 'underpowered' object-oriented language (ex from logging module)
+	    \rule{\textwidth}{1pt}
+	    \scriptsize
+	    \begin{minted}[fontsize=\tiny]{python}
+class Handler(Filterer):
+    ...
+    def __init__(self, level=NOTSET):
+        ...
+        self.createLock()
+    ...
+    def createLock(self):
+        """
+        Acquire a thread lock for serializing access to the underlying I/O.
+        """
+        self.lock = threading.RLock()
+    ...
+	    \end{minted}
+	    \rule{\textwidth}{1pt}
+	\end{frame}
+	\begin{frame}[fragile]
+	    \frametitle{Factory Method - Instance Attribute Factory}
+	    \rule{\textwidth}{1pt}
+	    \scriptsize
+	    \begin{minted}[fontsize=\tiny]{python}
+class IntLiteral:
+    def __init__(self,strval,intparser=None):
+        self.strval=strval
+        self.intparser=intparser or int
+        
+    def value(self):
+        return self.intparser(self.strval)
+
+
+# arbitrary custom integer parser
+def custint(x):
+    if '.' in x:
+        return int(x.split('.')[0])
+    return int(x)
+
+sn1=IntLiteral('3')
+pn1=sn1.value()
+print(pn1,type(pn1)) # 3 <class 'int'>
+
+sn2=IntLiteral('42.5',custint)
+pn2=sn2.value()
+print(pn2,type(pn2)) # 42 <class 'int'>
+	    \end{minted}
+	    \rule{\textwidth}{1pt}
+	\end{frame}
+	\frame{
+	    \frametitle{Factory Method - Remarks}
+	    \begin{itemize}
+	        \item Poor fit for python \cite{pyfactmeth}
+	        \item Was designed for langs where classes and functions can't be passed as parameters or stored as attributes
+	    \end{itemize}
+	}
+	\frame{
+	    \frametitle{References}
+	    \bibliographystyle{amsalpha}
+	    \bibliography{sources.bib}
+	}
+
+\end{document}
