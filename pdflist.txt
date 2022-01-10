@@ -1,0 +1,8 @@
+interpreter/Interpreter.pdf
+command/Command_pattern.pdf
+chainofresponsibilty/Chain_of_Responsibilty.pdf
+chainofresponsibilty/Behavorial_thumb_rules.pdf
+singleton/tex/singleton.pdf
+prototype/tex/prototype.pdf
+objectpool/tex/objectpool.pdf
+factorymethod/tex/factorymethod.pdf
