@@ -5,7 +5,7 @@ IFS=$'\n\t'
 pushd tex
 latexmk -c
 echo "removing files left behind by latexmk -c"
-rm *.xdv *.vrb *snm *.nav *.bbl *.pdf
+rm *.xdv *.vrb *snm *.nav *.bbl
 rm prototype.jpg
 popd
 
